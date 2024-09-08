@@ -33,20 +33,19 @@ async function handelFetchTodo(req, res) {
 async function handelDeleteTodo(req, res) {
   try {
     const todoId = parseInt(req.params.id);
-    const initialTodoLength = todos.length;
+    const todoIndex = todos.findIndex((todo) => todo.id === todoId && todo.userId === req.user.id);
 
-    todos = todos.filter((todo) => todo.id !== todoId );
-
-    if (todos.length === initialTodoLength) {
+    if (todoIndex === -1) {
       return res.status(404).json({ message: 'Todo not found' });
     }
+    
+    todos.splice(todoIndex, 1);
 
     res.json({ message: 'Todo deleted' });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 }
-
 async function handelMarkTodo(req, res) {
   try {
     const todoId = parseInt(req.params.id);
