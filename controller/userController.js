@@ -35,7 +35,7 @@ async function handelDeleteTodo(req, res) {
     const todoId = parseInt(req.params.id);
     const initialTodoLength = todos.length;
 
-    todos = todos.filter((todo) => todo.id !== todoId || todo.userId !== req.user.id);
+    todos = todos.filter((todo) => todo.id !== todoId );
 
     if (todos.length === initialTodoLength) {
       return res.status(404).json({ message: 'Todo not found' });
